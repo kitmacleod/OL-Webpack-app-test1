@@ -1,14 +1,13 @@
 const path = require('path');
 
 module.exports = {
-  entry:'./main.js',
+  entry:'./src/main.js',
   devServer:{
-    contentBase: './dist',
-    open:true,
-    overlay:true
+    contentBase: path.join(__dirname, 'public'),
+    historyApiFallback: true
   },
   output: {
-    path: path.resolve(__dirname, './dist'),
+    path: path.join(__dirname, 'public'),
     filename: 'bundle.js'
   },
   module: {
@@ -21,5 +20,6 @@ module.exports = {
         ]
       }
     ]
-  }
+  },
+  devtool: 'cheap-module-eval-source-map',
 };
