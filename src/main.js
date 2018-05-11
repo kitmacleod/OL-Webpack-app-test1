@@ -58,7 +58,17 @@ var mousePositionControl = new MousePosition({
 });
 map.addControl(mousePositionControl);
 
+// Linking mouse position to form
+var projectionSelect = document.getElementById('projection');
+projectionSelect.addEventListener('change', function(event) {
+  mousePositionControl.setProjection(event.target.value);
+});
 
+var precisionInput = document.getElementById('precision');
+precisionInput.addEventListener('change', function(event) {
+  var format = Coordinate.createStringXY(event.target.valueAsNumber);
+  mousePositionControl.setCoordinateFormat(format);
+});
 
 
 
