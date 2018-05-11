@@ -8,6 +8,10 @@ import VectorLayer from 'ol/layer/vector';
 import VectorSource from 'ol/source/vector';
 import Feature from 'ol/feature';
 import Point from 'ol/geom/point';
+import Overlay from 'ol/overlay';
+import Coordinate from 'ol/coordinate';
+import MousePosition from 'ol/control/MousePosition';
+
 
 // Workshop code 
 const map = new Map({
@@ -25,19 +29,36 @@ const map = new Map({
   })
 });
 
-// Draw current location
+// Draw current location uses default ol.style
 const position = new VectorSource();
 const vector = new VectorLayer({
   source: position
 });
+
+
 map.addLayer(vector);
 
 
 
 // Geolocation functionality
+// Maybe print this
 navigator.geolocation.getCurrentPosition(function(pos) {
   const coords = proj.fromLonLat([pos.coords.longitude, pos.coords.latitude]);
   map.getView().animate({center: coords, zoom: 10});
   position.addFeature(new Feature(new Point(coords)));
 });
+
+// Mouse position
+var mousePositionControl = new MousePosition({
+  coordinateFormat: Coordinate.createStringXY(4),
+  projection: 'EPSG:4326',
+  className: 'custom-mouse-position', //not sure needed
+  target: document.getElementById('mouse-position'),
+  undefinedHTML: '&nbsp;'
+});
+map.addControl(mousePositionControl);
+
+
+
+
 
