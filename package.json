@@ -7,7 +7,8 @@
     "start": "webpack-dev-server --open"
   },
   "dependencies": {
-    "ol": "^4.6.5"
+    "ol": "^4.6.5",
+    "ol-hashed": "^1.0.2"
   },
   "devDependencies": {
     "css-loader": "^0.28.11",

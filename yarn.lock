@@ -2627,6 +2627,10 @@ hash.js@^1.0.0, hash.js@^1.0.3:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.0"
 
+hashed@*:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/hashed/-/hashed-4.3.1.tgz#6aee58090cc5ca7d0569e20a0988c9da080b8ad6"
+
 hmac-drbg@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/hmac-drbg/-/hmac-drbg-1.0.1.tgz#d2745701025a6c775a6c545793ed502fc0c649a1"
@@ -3958,7 +3962,14 @@ obuf@^1.0.0, obuf@^1.1.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/obuf/-/obuf-1.1.2.tgz#09bea3343d41859ebd446292d11c9d4db619084e"
 
-ol@^4.6.5:
+ol-hashed@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/ol-hashed/-/ol-hashed-1.0.2.tgz#1fcac60cb0c6b4941ed4fbb6d5118431cfcb3cab"
+  dependencies:
+    hashed "*"
+    ol "*"
+
+ol@*, ol@^4.6.5:
   version "4.6.5"
   resolved "https://registry.yarnpkg.com/ol/-/ol-4.6.5.tgz#3b628ffb65885f277ceb24bb0c6eee0a38727442"
   dependencies:

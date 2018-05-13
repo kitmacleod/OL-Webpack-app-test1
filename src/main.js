@@ -12,6 +12,8 @@ import Overlay from 'ol/overlay';
 import Coordinate from 'ol/coordinate';
 import MousePosition from 'ol/control/MousePosition';
 import GeoJSON from 'ol/format/geojson';
+import sync from 'ol-hashed';
+
 
 
 // Workshop code 
@@ -42,9 +44,10 @@ const vector = new VectorLayer({
   source: position
 });
 
-
 map.addLayer(vector);
 
+// Synchronise the map view with the URL hash
+sync(map);
 
 
 // Geolocation functionality
