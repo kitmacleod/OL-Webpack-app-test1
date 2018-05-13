@@ -13,6 +13,7 @@ import Coordinate from 'ol/coordinate';
 import MousePosition from 'ol/control/MousePosition';
 import GeoJSON from 'ol/format/geojson';
 import sync from 'ol-hashed';
+import Draw from 'ol/interaction/draw';
 
 
 
@@ -80,6 +81,11 @@ precisionInput.addEventListener('change', function(event) {
   mousePositionControl.setCoordinateFormat(format);
 });
 
-// Adding GeoJSON
+// Adding draw
+const source = new VectorSource();
+map.addInteraction(new Draw({
+  type:'Polygon',
+  source: source
+}));
 
 
