@@ -15,8 +15,11 @@ import GeoJSON from 'ol/format/geojson';
 import sync from 'ol-hashed';
 import Draw from 'ol/interaction/draw';
 import Style from 'ol/style/style';
-
-
+import Fill from 'ol/style/fill';
+import Stroke from 'ol/style/stroke';
+import Circle from 'ol/style/circle';
+import Modify from 'ol/interaction/modify';
+import Snap from 'ol/interaction/snap';
 
 
 // Define tile layers
@@ -35,103 +38,102 @@ const vector = new VectorLayer({
 });
 
 // Define draw layer
-
-// // Adding draw
-// const source = new VectorSource();
-// map.addInteraction(new Draw({
-//   type:'Polygon',
-//   source: source
-// }));
-
 const drawSource = new VectorSource();
-const draw = new VectorLayer({
+const drawLayer = new VectorLayer({
   source: drawSource,
-  style: new 
-})
+  style: new Style({
+    fill: new Fill({
+      color: 'rgba(255, 255, 255, 0.2)'
+    }),
+    stroke: new Stroke({
+      color: '#ffcc33',
+      width: 2
+      }),
+      image: new Circle({
+        radius: 7,
+        fill: new Fill({
+          color: '#ffcc33'
+        })
+      }) 
+    })
+  });
 
-// need to add style here 
+  // currentLocation: draw current location uses default ol.style
+const position = new VectorSource();
+const currentPosition = new VectorLayer({
+  source: position
+});
+
+// Geolocation functionality
+// Maybe print this
+navigator.geolocation.getCurrentPosition(function(pos) {
+  const coords = proj.fromLonLat([pos.coords.longitude, pos.coords.latitude]);
+  map.getView().animate({center: coords, zoom: 4});
+  position.addFeature(new Feature(new Point(coords)));
+});
 
 
-// Simple test
+
+
+// Simple map object with array of layers
 const map = new Map({
   target: 'map',
-  layers: [tile, vector],
+  layers: [tile, vector, currentPosition, drawLayer],
   view: new View({
     center: [0,0],
     zoom: 2
   })
 });
 
+// Synchronise the map view with the URL hash
+sync(map);
 
-// // Workshop code 
-// const map = new Map({
-//   target: 'map',
-//   layers: [
-//     new TileLayer({
-//       source: new XYZSource({
-//         url: 'http://tile.stamen.com/terrain/{z}/{x}/{y}.jpg'
-//        })
-//     }),
-//     new VectorLayer({
-//       source: new VectorSource({
-//         format: new GeoJSON(),
-//         url: 'https://openlayers.org/en/v4.6.5/examples/data/geojson/countries.geojson'
-//       })
-//     })
-//   ],
-//   view: new View({
-//     center: [0, 0],
-//     zoom: 2
-//   })
-// });
+// Draw and modify
+const modify = new Modify({source: drawSource});
+map.addInteraction(modify);
 
-// // Draw current location uses default ol.style
-// const position = new VectorSource();
-// const vector = new VectorLayer({
-//   source: position
-// });
+var draw, snap;
+var typeSelect = document.getElementById('type');
 
-// map.addLayer(vector);
-
-// // Synchronise the map view with the URL hash
-// sync(map);
+function addInteractions() {
+  draw = new Draw({
+    source: drawSource,
+    type: typeSelect.value
+  });
+  map.addInteraction(draw);
+  snap = new Snap({source: drawSource});
+  map.addInteraction(snap);
+}
+typeSelect.onchange = function() {
+  map.removeInteraction(draw);
+  map.removeInteraction(snap);
+  addInteractions();
+};
+addInteractions();
 
 
-// // Geolocation functionality
-// // Maybe print this
-// navigator.geolocation.getCurrentPosition(function(pos) {
-//   const coords = proj.fromLonLat([pos.coords.longitude, pos.coords.latitude]);
-//   map.getView().animate({center: coords, zoom: 4});
-//   position.addFeature(new Feature(new Point(coords)));
-// });
+// Mouse position
+var mousePositionControl = new MousePosition({
+  coordinateFormat: Coordinate.createStringXY(4),
+  projection: 'EPSG:4326',
+  className: 'custom-mouse-position', //not sure needed
+  target: document.getElementById('mouse-position'),
+  undefinedHTML: '&nbsp;'
+});
+map.addControl(mousePositionControl);
 
-// // Mouse position
-// var mousePositionControl = new MousePosition({
-//   coordinateFormat: Coordinate.createStringXY(4),
-//   projection: 'EPSG:4326',
-//   className: 'custom-mouse-position', //not sure needed
-//   target: document.getElementById('mouse-position'),
-//   undefinedHTML: '&nbsp;'
-// });
-// map.addControl(mousePositionControl);
+// Linking mouse position to form
+var projectionSelect = document.getElementById('projection');
+projectionSelect.addEventListener('change', function(event) {
+  mousePositionControl.setProjection(event.target.value);
+});
 
-// // Linking mouse position to form
-// var projectionSelect = document.getElementById('projection');
-// projectionSelect.addEventListener('change', function(event) {
-//   mousePositionControl.setProjection(event.target.value);
-// });
+var precisionInput = document.getElementById('precision');
+precisionInput.addEventListener('change', function(event) {
+  var format = Coordinate.createStringXY(event.target.valueAsNumber);
+  mousePositionControl.setCoordinateFormat(format);
+});
 
-// var precisionInput = document.getElementById('precision');
-// precisionInput.addEventListener('change', function(event) {
-//   var format = Coordinate.createStringXY(event.target.valueAsNumber);
-//   mousePositionControl.setCoordinateFormat(format);
-// });
 
-// // Adding draw
-// const source = new VectorSource();
-// map.addInteraction(new Draw({
-//   type:'Polygon',
-//   source: source
-// }));
 
 
