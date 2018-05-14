@@ -72,7 +72,7 @@ navigator.geolocation.getCurrentPosition(function(pos) {
   position.addFeature(new Feature(new Point(coords)));
 });
 
-
+// small change
 
 
 // Simple map object with array of layers
