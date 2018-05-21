@@ -14,6 +14,9 @@ import MousePosition from 'ol/control/MousePosition';
 import GeoJSON from 'ol/format/geojson';
 import sync from 'ol-hashed';
 
+import 'normalize.css/normalize.css';
+import './styles/styles.scss';
+
 // Define raster layers
 const raster = new TileLayer({
   source: new OSM

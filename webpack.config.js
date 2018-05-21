@@ -4,7 +4,7 @@ module.exports = {
   entry:'./src/main.js',
   devServer:{
     contentBase: path.join(__dirname, 'public'),
-    historyApiFallback: true
+     historyApiFallback: true
   },
   output: {
     path: path.join(__dirname, 'public'),
@@ -13,13 +13,15 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/,
+        test: /\.s?css$/,
         use: [
           'style-loader',
-          'css-loader'
+          'css-loader',
+          'sass-loader'
         ]
-      }
-    ]
+      }]
   },
   devtool: 'cheap-module-eval-source-map',
 };
+
+// 
