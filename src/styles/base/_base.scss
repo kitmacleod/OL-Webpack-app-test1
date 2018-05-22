@@ -1,9 +1,10 @@
 html {
   font-size: 62.5%;
+  font-color: $off-black;
 }
 
 body { 
   font-family: Helvetica, Ariel, sans-serif;
-  font-size: 1.6rem;
-  background-color: bisque;
+  font-size: $m-size;
+  background-color: $off-white;
 }

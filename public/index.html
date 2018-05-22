@@ -14,29 +14,33 @@
       </style> -->
   </head>
   <body>
-   <div id="header"></div>
-   <h1 id="header__title">Test</h1>
-   <h2 id="header__subtitle">Subtitle</h2>
-    <div id="map-container"></div>
-    <div id="mouse-position"></div>
-    <form>
-      <label>Projection</label>
-      <select id="projection">
-        <option value="EPSG:4326">EPSG:4326">EPSG:4326 (WGS 84)</option>
-        <option value="EPSG:3857">EPSG:3857 (WGS84 Web Mercator)</option>
-      </select>
-      <label>Precision </label>
-      <input id="precision" type="number" min="0" max="12"value="4"/>
-    </form>
-    <form class="form-inline">
-      <label>Geometry type &nbsp;</label>
-      <select id="type">
-        <option value="Point">Point</option>
-        <option value="LineString">LineString</option>
-        <option value="Polygon">Polygon</option>
-        <option value="Circle">Circle</option>
-      </select>
-    </form>
+   <div id="header">
+     <div id="container">
+        <h1 id="header__title">Test</h1>
+        <h2 id="header__subtitle">Subtitle</h2>
+         <div id="map-container"></div>
+         <div id="mouse-position"></div>
+         <form>
+           <label>Projection</label>
+           <select id="projection">
+             <option value="EPSG:4326">EPSG:4326">EPSG:4326 (WGS 84)</option>
+             <option value="EPSG:3857">EPSG:3857 (WGS84 Web Mercator)</option>
+           </select>
+           <label>Precision </label>
+           <input id="precision" type="number" min="0" max="12"value="4"/>
+         </form>
+         <form class="form-inline">
+           <label>Geometry type &nbsp;</label>
+           <select id="type">
+             <option value="Point">Point</option>
+             <option value="LineString">LineString</option>
+             <option value="Polygon">Polygon</option>
+             <option value="Circle">Circle</option>
+           </select>
+         </form>
+     </div>
+   </div>
+   
     <script src="/bundle.js"></script>
   </body>
 </html>
