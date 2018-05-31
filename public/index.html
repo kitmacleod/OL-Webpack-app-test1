@@ -13,14 +13,21 @@
     }
       </style> -->
   </head>
+
+  
   <body>
-   <div id="header">
-     <div id="container">
-        <h1 id="header__title">Test</h1>
-        <h2 id="header__subtitle">Subtitle</h2>
+   
+    <div class="header">
+        <h1 class="header__title">Test</h1>
+        <h2 class="header__subtitle">Subtitle</h2>
+    </div>
+
+     <div class="container">
          <div id="map-container"></div>
-         <div id="mouse-position"></div>
-         <form>
+         <div class="chart">Chart will go here</div>
+         <div class="input">User input
+           <div class="mouse-position"></div>
+           <form>
            <label>Projection</label>
            <select id="projection">
              <option value="EPSG:4326">EPSG:4326">EPSG:4326 (WGS 84)</option>
@@ -37,8 +44,8 @@
              <option value="Polygon">Polygon</option>
              <option value="Circle">Circle</option>
            </select>
-         </form>
-     </div>
+          </form>
+        </div>
    </div>
    
     <script src="/bundle.js"></script>

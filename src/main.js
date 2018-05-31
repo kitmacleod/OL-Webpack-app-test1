@@ -50,6 +50,7 @@ const drawLayer = new VectorLayer({
       }) 
     })
   });
+  // add comment
 
   // currentLocation: draw current location uses default ol.style
 const position = new VectorSource();
