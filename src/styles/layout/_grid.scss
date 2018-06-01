@@ -1,9 +1,58 @@
 .container {
  display: grid;
+ grid-gap: 10px;
  width: 900rem;
- grid-template-columns: 40rem 20rem;
- grid-template-rows: 4fr 1fr;
+ grid-template-areas:
+ "header"
+ "nav"
+ "map-container"
+ "chart"
+ "input"
+ "footer"
+ // grid-template-columns: 40rem 20rem;
+ //  grid-template-rows: 4fr 1fr;
 }
+
+.header {
+  grid-area: header;
+}
+
+.nav {
+  grid-area: nav;
+}
+
+.map-container {
+  grid-area: map-container;
+}
+
+.chart {
+  grid-area: chart;
+}
+
+.input {
+  grid-area: input;
+}
+
+.footer {
+  grid-area: footer;
+}
+
+@media (min-width: $desktop-breakpoint) {
+  .container {
+    grid-template-columns: 3fr 1fr;
+    grid-template-areas:
+    "header header"
+    "nav nav"
+    "map-container chart"
+    "input input"
+    "footer footer"; 
+  }
+  nav ul {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
 
 
 

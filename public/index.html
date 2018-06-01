@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Integrating OpenLayers with a Webpack build</title>
     <!-- <style>
     html, body, #map-container {
@@ -16,13 +17,20 @@
 
   
   <body>
-   
-    <div class="header">
-        <h1 class="header__title">Test</h1>
-        <h2 class="header__subtitle">Subtitle</h2>
-    </div>
+  
 
      <div class="container">
+         <header class="header">
+            <h1 class="header__title">Test</h1>
+            <h2 class="header__subtitle">Subtitle</h2>
+         </header>
+         <nav class="nav">
+           <ul>
+             <li><a href="">Nav 1</a></li>
+             <li><a href="">Nav 2</a></li>
+             <li><a href="">Nav 3</a></li>
+           </ul>
+         </nav> 
          <div id="map-container"></div>
          <div class="chart">Chart will go here</div>
          <div class="input">User input
@@ -46,6 +54,7 @@
            </select>
           </form>
         </div>
+        <footer class="main-footer">The footer</footer>
    </div>
    
     <script src="/bundle.js"></script>
