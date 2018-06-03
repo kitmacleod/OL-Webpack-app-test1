@@ -1,0 +1,38 @@
+/*030618 I tried to set out grid using these templates, did not work   */
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(12, [col-start] 1fr);
+  grid-template-rows: repeat(12, [row-start] 1fr);
+  grid-gap: 10px;
+}
+
+.header {
+  grid-column: col-start / span 12;
+  grid-row: row-start / span 1;
+}
+
+.nav {
+  grid-column: col-start / span 12;
+  grid-row: row-start 2 /span 1;
+}
+
+.map-container {
+  grid-column: col-start 8/ span 4;
+  grid-row: row-start 3 / span 7; 
+}
+
+.chart {
+  grid-column: col-start 8 / span 4;
+  grid-row: row-start 3 / span 7;
+}
+
+.user {
+  grid-column: col-start / span 12;
+  grid-row: row-start 10 / span 1;
+}
+
+.footer { 
+  grid-column: col-start / span 12;
+  grid-row: row-start 11 / span 1;
+}
