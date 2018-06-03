@@ -1,0 +1,57 @@
+.header {
+  grid-area: header;
+}
+
+.nav {
+  grid-area: nav;
+}
+
+.map-container {
+  grid-area: map-container;
+}
+
+.chart {
+  grid-area: chart;
+}
+
+.input {
+  grid-area: input;
+}
+
+.footer {
+  grid-area: footer;
+}
+
+.container {
+  display: grid;
+  grid-gap: 1em;
+  grid-template-areas:
+  "header"
+  "nav"
+  "map-container"
+  "chart"
+  "input"
+  "footer"
+}
+nav ul {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media only screen and (min-width: 800px) {
+  /*tablets, need to adjust */
+  .container {
+    grid-template-columns: auto 20%;
+    grid-template-areas:
+    "header header"
+    "nav nav"
+    "map-container chart"
+    "input input"
+    "footer footer";
+  }
+  nav ul {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
