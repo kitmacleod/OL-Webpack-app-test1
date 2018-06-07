@@ -4,15 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Integrating OpenLayers with a Webpack build</title>
-    <!-- <style>
-    html, body, #map-container {
-      margin: 0;
-      height: 100%;
-      width: 100%;
-      font-family: sans-serif;
-      background-color: #5e5ef1;
-    }
-      </style> -->
+   
+    <script src="https://cdn.jsdelivr.net/npm/vega@4.0.0-rc.2"></script>
+
+    <script type="text/javascript">
+      var view;
+  
+      vega.loader()
+        .load('https://vega.github.io/vega/examples/bar-chart.vg.json')
+        .then(function(data) { render(JSON.parse(data)); });
+  
+      function render(spec) {
+        view = new vega.View(vega.parse(spec))
+          .renderer('canvas')  // set renderer (canvas or svg)
+          .initialize('#view') // initialize view within parent DOM container
+          .hover()             // enable hover encode set processing
+          .run();
+      }
+    </script>
+
+
   </head>
 
   
@@ -32,9 +43,13 @@
            </ul>
          </nav> 
          <div id="map-container"></div>
-         <div class="chart">Chart will go here</div>
+         <div class="chart">
+           <p>Chart to go here</p>
+           <div id="view"></div>
+
+         </div>
          <div class="input">User input
-           <div class="mouse-position"></div>
+           <div class="mouse-position"> </div>
            <form>
            <label>Projection</label>
            <select id="projection">
