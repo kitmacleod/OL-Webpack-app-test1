@@ -139,14 +139,14 @@ let loader = {
       return new Promise((resolve,reject) => {
 
           let values = [
-              {"category": "A", "amount": 28},
-              {"category": "B", "amount": 55},
-              {"category": "C", "amount": 43},
-              {"category": "D", "amount": 91},
-              {"category": "E", "amount": 81},
-              {"category": "F", "amount": 53},
-              {"category": "G", "amount": 19},
-              {"category": "H", "amount": 87}
+              {"category": "A", "value": 28},
+              {"category": "B", "value": 55},
+              {"category": "C", "value": 43},
+              {"category": "D", "value": 91},
+              {"category": "E", "value": 81},
+              {"category": "F", "value": 53},
+              {"category": "G", "value": 19},
+              {"category": "H", "value": 87}
           ];
 
           let wait = setTimeout(() => {
@@ -174,76 +174,81 @@ let vegaJSONSpec = {
   ],
 
   "signals": [
+    {
+    "name": "tooltip",
+    "value": {},
+    "on": [
+    {"events": "rect:mouseover", "update": "datum"},
+    {"events": "rect:mouseout", "update": "{}"}
+    ]
+    }
+    ],
+    
+    
+    
+    "scales": [
       {
-          "name": "tooltip",
-          "value": {},
-          "on": [
-              {"events": "rect:mouseover", "update": "datum"},
-              {"events": "rect:mouseout",  "update": "{}"}
-          ]
-      }
-  ],
-
-  "scales": [
-      {
-          "name": "xscale",
-          "type": "band",
-          "domain": {"data": "table", "field": "category"},
-          "range": "width"
+        "name": "y",
+        "type": "band",
+        "domain": {"data": "table", "field": "category"},
+        "range": "height",
+        "padding": 0.2
       },
       {
-          "name": "yscale",
-          "domain": {"data": "table", "field": "amount"},
-          "nice": true,
-          "range": "height"
+        "name": "x",
+        "type": "linear",
+        "domain": {"data": "table", "field": "value"},
+        "range": "width"
       }
-  ],
-
-  "axes": [
-      { "orient": "bottom", "scale": "xscale" },
-      { "orient": "left", "scale": "yscale" }
-  ],
-
-  "marks": [
+    
+    ],
+    
+    "axes": [
+      {"orient": "left", "scale": "y", "tickSize": 0, "labelPadding": 4, "zindex": 1},
+      {"orient": "bottom", "scale": "x"}
+    ],
+    
+    "marks": [
       {
-          "type": "rect",
-          "from": {"data":"table"},
-          "encode": {
-              "enter": {
-                  "x": {"scale": "xscale", "field": "category", "offset": 1},
-                  "width": {"scale": "xscale", "band": 1, "offset": -1},
-                  "y": {"scale": "yscale", "field": "amount"},
-                  "y2": {"scale": "yscale", "value": 0}
-              },
-              "update": {
-                  "fill": {"value": "steelblue"}
-              },
-              "hover": {
-                  "fill": {"value": "red"}
-              }
+        "type": "rect",
+        "from": {"data": "table"},
+        "encode":  {
+          "enter": {
+            "y": {"scale": "y", "field": "category"},
+            "height": {"scale":"y", "band": 1},
+            "x": {"scale": "x", "field": "value"},
+            "x2": {"scale": "x", "value": 0}
+          },
+          "update": {
+            "fill": {"value": "steelblue"}
+          },
+          "hover": {
+            "fill": {"value": "red"}
           }
-      },
-      {
-          "type": "text",
-          "encode": {
-              "enter": {
-                  "align": {"value": "center"},
-                  "baseline": {"value": "bottom"},
-                  "fill": {"value": "#333"}
-              },
-              "update": {
-                  "x": {"scale": "xscale", "signal": "tooltip.category", "band": 0.5},
-                  "y": {"scale": "yscale", "signal": "tooltip.amount", "offset": -2},
-                  "text": {"signal": "tooltip.amount"},
-                  "fillOpacity": [
-                      {"test": "datum === tooltip", "value": 0},
-                      {"value": 1}
-                  ]
-              }
-          }
-      }
-  ]
-};
+        }
+        },
+        {
+    "type": "text",
+    "encode": {
+    "enter": {
+    "align": {"value": "center"},
+    "baseline": {"value": "bottom"},
+    "fill": {"value": "#333"}
+    },
+    "update": {
+    "x": {"scale": "x", "signal": "tooltip.value", "offset": 10},
+    "y": {"scale": "y", "signal": "tooltip.category", "band": 0.5},
+    "text": {"signal": "tooltip.value"},
+    "fillOpacity": [
+    {"test": "datum === tooltip", "value": 0},
+    {"value": 1}
+    ]
+    }
+    }
+    }
+    
+    ]
+    };
 
 
 let options = {
@@ -257,7 +262,6 @@ let view = new vega.View(vega.parse(vegaJSONSpec),options)
   .initialize('#view') // initialize view within parent DOM container
   .hover()             // enable hover encode set processing
   .run();              // run the dataflow and render the view
-
 
 
 
