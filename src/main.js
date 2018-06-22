@@ -26,7 +26,7 @@ import Overlay from 'ol/Overlay';
 import {getArea, getLength} from 'ol/sphere.js';
 import {LineString, Polygon} from 'ol/geom.js';
 import {Tile as TileLayer, Vector as VectorLayer} from 'ol/layer';
-
+import {defaults as defaultControls, OverviewMap} from 'ol/control';
 
 
 // // Geolocation functionality
@@ -43,6 +43,20 @@ const position = new VectorSource();
 const currentPosition = new VectorLayer({
   source: position
 });
+
+// Example GeoJSON/vector layer
+const countryLayer = new VectorLayer({
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: './data/countries.json'
+  }),
+  // style: function(feature) {
+  //   style.getText().setText(feature.get('name'));
+  //   return style;
+  // }, 
+ // zIndex: 1
+});
+
 
 
 // OL5 Measure example 
@@ -152,7 +166,10 @@ const pointerMoveHandler = function(evt) {
 
 
 const map = new Map({
-  layers: [raster, vector,currentPosition],
+  layers: [raster, vector,currentPosition, countryLayer],
+  controls: defaultControls().extend([
+    new OverviewMap()
+  ]),
   target: 'map-container',
   view: new View({
     center: [-300000, 8000000],
