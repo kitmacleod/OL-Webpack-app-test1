@@ -7,6 +7,7 @@
     "start": "webpack-dev-server --open"
   },
   "dependencies": {
+    "copy-webpack-plugin": "4.5.1",
     "node-sass": "^4.9.0",
     "normalize.css": "^8.0.0",
     "ol": "5.0.0-beta.13",

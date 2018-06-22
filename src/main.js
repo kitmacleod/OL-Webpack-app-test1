@@ -2,40 +2,46 @@ import 'ol/ol.css';
 import Map from 'ol/map';
 import View from 'ol/view';
 import {Draw, Modify, Snap} from 'ol/interaction';
-import {Tile as TileLayer, Vector as VectorLayer} from 'ol/layer'; 
-import {OSM, Vector as VectorSource} from 'ol/source';
+// import {Tile as TileLayer, Vector as VectorLayer} from 'ol/layer';
+import VectorLayer from 'ol/layer/Vector';
+import TileLayer from 'ol/layer/Tile.js';
+import VectorSource from 'ol/source/Vector'; 
+// import {OSM, Vector as VectorSource} from 'ol/source';
+import OSM from 'ol/source';
 import {Circle as CircleStyle, Fill, Stroke, Style} from 'ol/style';
 import {fromLonLat} from 'ol/proj';
 import {createStringXY} from 'ol/coordinate';
 import Feature from 'ol/feature';
 import Point from 'ol/geom/point';
+import LineString from 'ol/geom/linestring';
 import Coordinate from 'ol/coordinate';
 import MousePosition from 'ol/control/MousePosition';
 import GeoJSON from 'ol/format/geojson';
 import sync from 'ol-hashed';
-
 import * as vega from 'vega';
-
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 
-// Define raster layers
-const raster = new TileLayer({
-  source: new OSM
-});
 
-// Define vector layer, comment this out
-const vector = new VectorLayer({
-  source: new VectorSource({
-    format: new GeoJSON(),
-    url: 'https://openlayers.org/en/v4.6.5/examples/data/geojson/countries.geojson'
-  })
-});
+
+// // Define raster layers (210618  causing an error) 
+// const raster = new TileLayer({
+//   source: new OSM()
+// });
+
+// // Define vector layer, comment this out
+// // const vector = new VectorLayer({
+// //   source: new VectorSource({
+// //     format: new GeoJSON(),
+// //     url: 'https://openlayers.org/en/v4.6.5/examples/data/geojson/countries.geojson'
+// //   })
+// // });
 
 // Define draw layer
 const drawSource = new VectorSource();
 const drawLayer = new VectorLayer({
   source: drawSource,
+  zIndex: 2,
   style: new Style({
     fill: new Fill({
       color: 'rgba(255, 255, 255, 0.2)'
@@ -53,7 +59,6 @@ const drawLayer = new VectorLayer({
     })
   });
   // add comment
-
   // currentLocation: draw current location uses default ol.style
 const position = new VectorSource();
 const currentPosition = new VectorLayer({
@@ -68,13 +73,51 @@ navigator.geolocation.getCurrentPosition(function(pos) {
   position.addFeature(new Feature(new Point(coords)));
 });
 
+// GeoJSON layer
+// I may need to set style (see example http://openlayers.org/en/beta/examples/vector-layer.html?q=geojson )
+
+
+// // Working OL code
+// new Map({
+//   target: 'map-container',
+//   layers: [
+//     new VectorLayer({
+//       source: new VectorSource({
+//         format: new GeoJSON(),
+//         url: './data/countries.json'
+//       })
+//     })
+//   ],
+//   view: new View({
+//     center: [0, 0],
+//     zoom: 2
+//   })
+// });
+
+
+
+
+//
+
+const countryLayer = new VectorLayer({
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: './data/countries.json'
+  
+  }),
+  // style: function(feature) {
+  //   style.getText().setText(feature.get('name'));
+  //   return style;
+  // }, 
+  zIndex: 1
+});
+
 // small change
-
-
 // Simple map object with array of layers
 const map = new Map({
   target: 'map-container',
-  layers: [raster, currentPosition, drawLayer],
+  layers: [currentPosition, drawLayer, countryLayer],
+  // layers: [countryLayer],
   view: new View({
     center: [0,0],
     zoom: 2
@@ -93,22 +136,64 @@ map.addInteraction(modify);
 let draw, snap;
 const typeSelect = document.getElementById('type');
 
-function addInteractions() {
-  draw = new Draw({
-    source: drawSource,
-    type: typeSelect.value
-  });
-  map.addInteraction(draw);
+
+// Jontas fiddle add vars NOT WORKING
+// var vectorSource = new VectorSource();
+// var vectorLayer = new VectorLayer({
+//   source: vectorSource });
+//   map.addLayer(vectorLayer);
+// var coords_element = document.getElementById('coords');
+// var coords_length = 0;
+
+
+ function addInteractions() {
+   draw = new Draw({
+     source: drawSource,
+     type: typeSelect.value,
+     // Jontas  fiddle NOT WORKING 
+//     geometryFunction: function (coords, geom) {
+//       if (!geom) geom = new
+//       LineString(null);
+//       geom.setCoordinates(coords);
+//       //if linestring changed
+//       if(coords.length !== coords_length) {
+//         coords_length = coords.length;
+//         coords_element.innerHTML = coords.join('<br>');
+//       }
+//       return geom;
+
+    // }
+   });
+   map.addInteraction(draw);
+
+// Jonatas fiddle code for feature console NOT WORKING
+
+// var feature;
+
+// draw.on('drawend', function(evt) {
+//   console.infor('drawend');
+//   //console.info(evt);
+//   feature = evt.feature;
+// });
+// vectorSource.on('addfeature', 
+// function(evt) {
+//   console.info('addfeature');
+//   console.info(evt);
+//   console.info(evt.feature === feature);
+// });
+
+
   snap = new Snap({source: drawSource});
   map.addInteraction(snap);
-}
+  }
+
 typeSelect.onchange = function() {
   map.removeInteraction(draw);
   map.removeInteraction(snap);
   addInteractions();
 };
 
-addInteractions();
+ addInteractions();
 
 
 // Mouse position
@@ -262,7 +347,6 @@ let view = new vega.View(vega.parse(vegaJSONSpec),options)
   .initialize('#view') // initialize view within parent DOM container
   .hover()             // enable hover encode set processing
   .run();              // run the dataflow and render the view
-
 
 
 
