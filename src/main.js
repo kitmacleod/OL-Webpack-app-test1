@@ -28,6 +28,23 @@ import {LineString, Polygon} from 'ol/geom.js';
 import {Tile as TileLayer, Vector as VectorLayer} from 'ol/layer';
 
 
+
+// // Geolocation functionality
+// // Maybe print this
+navigator.geolocation.getCurrentPosition(function(pos) {
+  const coords = fromLonLat([pos.coords.longitude, pos.coords.latitude]);
+  map.getView().animate({center: coords, zoom: 10});
+  position.addFeature(new Feature(new Point(coords)));
+  });
+
+
+ // currentLocation: draw current location uses default ol.style
+const position = new VectorSource();
+const currentPosition = new VectorLayer({
+  source: position
+});
+
+
 // OL5 Measure example 
 
 const raster = new TileLayer({
@@ -132,12 +149,14 @@ const pointerMoveHandler = function(evt) {
 };
 
 
+
+
 const map = new Map({
-  layers: [raster, vector],
+  layers: [raster, vector,currentPosition],
   target: 'map-container',
   view: new View({
-    center: [-11000000, 4600000],
-    zoom: 15
+    center: [-300000, 8000000],
+    zoom: 6
   })
 });
 
@@ -343,13 +362,7 @@ addInteraction();
 //   source: position
 // });
 
-// // Geolocation functionality
-// // Maybe print this
-// navigator.geolocation.getCurrentPosition(function(pos) {
-//   const coords = fromLonLat([pos.coords.longitude, pos.coords.latitude]);
-//   map.getView().animate({center: coords, zoom: 4});
-//   position.addFeature(new Feature(new Point(coords)));
-// });
+
 
 // // GeoJSON layer
 // // I may need to set style (see example http://openlayers.org/en/beta/examples/vector-layer.html?q=geojson )
