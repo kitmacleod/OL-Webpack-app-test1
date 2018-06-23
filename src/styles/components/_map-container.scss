@@ -9,6 +9,18 @@
   // grid-row-end: 2;
 }
 
+.tools {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+.tools a{
+  display: inline-block;
+  padding: 0.5rem;
+  background: white;
+  cursor: pointer;
+}
+
 .tooltip {
   position: relative;
   background: rgba(0, 0, 0, 0.5);

@@ -27,6 +27,25 @@
   -->
 
 
+  <style>
+  
+    /*! [tools] */
+    #tools {
+      position: relative;
+      top: 1rem;
+      right: 1rem;
+    }
+    #tools a {
+      display: inline-block;
+      padding: 0.5rem;
+      background: white;
+      cursor: pointer;
+    }
+    /*! [tools] */
+  </style>
+
+
+
   </head>
 
   
@@ -46,13 +65,17 @@
            </ul>
          </nav> 
          <div id="map-container"></div>
+         <div id="tools">
+           <a id="clear">Clear</a>
+           <a id="download"="features.json">Download</a>
+         </div>
          <div class="chart">
            <p>Chart</p>
            <div id="view"></div>
 
          </div>
          <div class="input">User input
-           <div class="mouse-position"> </div>
+          <!-- <div class="mouse-position"> </div>
            <form>
            <label>Projection</label>
            <select id="projection">
@@ -61,7 +84,7 @@
            </select>
            <label>Precision </label>
            <input id="precision" type="number" min="0" max="12"value="4"/>
-         </form>
+         </form> -->
          <form class="form-inline">
            <label>Type of measure &nbsp;</label>
            <select id="type">

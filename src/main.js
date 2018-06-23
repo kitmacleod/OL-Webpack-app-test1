@@ -179,7 +179,7 @@ const pointerMoveHandler = function(evt) {
 
 
 const map = new Map({
-  layers: [raster, vector,currentPosition, countryLayer, fieldLayer],
+  layers: [raster, vector, currentPosition, countryLayer, fieldLayer],
   controls: defaultControls().extend([
     new OverviewMap(),
     new ZoomToExtent ({
@@ -359,7 +359,31 @@ typeSelect.onchange = function() {
 addInteraction();
 
 
+// add from workshop clear and download buttons
+// clear in ws on source (here vector)
+// const clearVector = document.getElementById('clear');
+// clearVector.addEventListener('click', function() {
+//   source.clear();
+// });
 
+// Try workshop download code 230618 not working
+
+// const format = new GeoJSON({featureProjection: 'EPSG:3857'});
+// const download = document.getElementById('download');
+// source.on('change', function() {
+//   const features = source.getFeatures();
+//   const json = format.writeFeatures(features);
+//   download.href = 'data:text/json;charset=utf-8,' + json;
+// });
+
+
+
+
+// Remove tooltip class 230618 not working
+// const clearTooltip = document.getElementsByClassName('measureTooltip');
+// clearTooltip.addEventListener('click', function() {
+//   source.clear();
+// });
 
 
 // Older code
