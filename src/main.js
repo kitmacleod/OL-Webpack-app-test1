@@ -26,7 +26,7 @@ import Overlay from 'ol/Overlay';
 import {getArea, getLength} from 'ol/sphere.js';
 import {LineString, Polygon} from 'ol/geom.js';
 import {Tile as TileLayer, Vector as VectorLayer} from 'ol/layer';
-import {defaults as defaultControls, OverviewMap} from 'ol/control';
+import {defaults as defaultControls, OverviewMap, ZoomToExtent} from 'ol/control';
 
 
 // // Geolocation functionality
@@ -55,6 +55,19 @@ const countryLayer = new VectorLayer({
   //   return style;
   // }, 
  // zIndex: 1
+});
+
+// Add example field polygon
+const fieldLayer = new VectorLayer({
+  source: new VectorSource({
+    format: new GeoJSON(),
+    url: './data/field.json'
+  }),
+  style: new Style({
+    fill: new Fill({
+      color: 'green'
+    })
+  })
 });
 
 
@@ -166,16 +179,22 @@ const pointerMoveHandler = function(evt) {
 
 
 const map = new Map({
-  layers: [raster, vector,currentPosition, countryLayer],
+  layers: [raster, vector,currentPosition, countryLayer, fieldLayer],
   controls: defaultControls().extend([
-    new OverviewMap()
+    new OverviewMap(),
+    new ZoomToExtent ({
+      // [minx, miny, maxx, maxy]
+      extent: [
+        -600000, 7009900, -300000, 8000000
+      ]
+    })
   ]),
   target: 'map-container',
   view: new View({
     center: [-300000, 8000000],
     zoom: 6
   })
-});
+    });
 
 map.on('pointermove', pointerMoveHandler);
 
