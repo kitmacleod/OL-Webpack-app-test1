@@ -28,6 +28,9 @@ import {LineString, Polygon} from 'ol/geom.js';
 import {Tile as TileLayer, Vector as VectorLayer} from 'ol/layer';
 import {defaults as defaultControls, OverviewMap, ZoomToExtent} from 'ol/control';
 
+//import {intersect} from '@turf/intersect';
+import turf from '@turf/turf';
+
 
 // // Geolocation functionality
 // // Maybe print this
@@ -318,16 +321,18 @@ function addInteraction() {
       var userFeatureObj = JSON.parse(userFeature);
       //  console.log(typeof userFeature);
       //  console.log(userFeature);
-       console.log('Type of',typeof userFeatureObj);
+       console.log('Type: ',typeof userFeatureObj);
        console.log('userFeatureObj',userFeatureObj);
       
-      // Save string locally and test it exists
+      // Save string locally and test it exists (gets overwritten with each feature)
      localStorage.setItem('drawnFeature', userFeature);
      if(userFeature) {
        console.log("userFeature Exists");
      } else {
        console.log("userFeature not exist");
      }
+
+     
 
 
 
@@ -342,6 +347,43 @@ function addInteraction() {
 
     }, this);
 }
+
+// Try intersection outside the draw.on 'end'
+// Try @Turf/intersect 
+
+var poly1 = {
+  "type": "Feature",
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [[
+        [-122.801742, 45.48565],
+        [-122.801742, 45.60491],
+        [-122.584762, 45.60491],
+        [-122.584762, 45.48565],
+        [-122.801742, 45.48565]
+      ]]
+    }
+  }
+  var poly2 = {
+  "type": "Feature",
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [[
+        [-122.520217, 45.535693],
+        [-122.64038, 45.553967],
+        [-122.720031, 45.526554],
+        [-122.669906, 45.507309],
+        [-122.723464, 45.446643],
+        [-122.532577, 45.408574],
+        [-122.487258, 45.477466],
+        [-122.520217, 45.535693]
+      ]]
+    }
+  }
+
+ // Unable to get this to work 030718 (error about reading property of intersect)
+ //var intersection = turf.intersect(countryLayer, fieldLayer); 
+
 
 // Not sure why no features returned, did not like draw!
 //var format = new GeoJSON();
