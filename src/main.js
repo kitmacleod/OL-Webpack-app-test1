@@ -176,8 +176,6 @@ const pointerMoveHandler = function(evt) {
 };
 
 
-
-
 const map = new Map({
   layers: [raster, vector, currentPosition, countryLayer, fieldLayer],
   controls: defaultControls().extend([
@@ -293,24 +291,63 @@ function addInteraction() {
           output = formatLength(geom);
           tooltipCoord = geom.getLastCoordinate();
         }
+        // Delete
+        // var format = new GeoJSON();
+        // var geomFeatures = format.writeFeatures(vector);
+        // console.log(geomFeatures);
+   
         measureTooltipElement.innerHTML = output;
         measureTooltip.setPosition(tooltipCoord);
       });
     }, this);
-
+  
   draw.on('drawend',
-    function() {
+    function(evt) {
       measureTooltipElement.className = 'tooltip tooltip-static';
       measureTooltip.setOffset([0, -7]);
-      // unset sketch
+      // unset sketch 
       sketch = null;
       // unset tooltip so that a new one can be created
       measureTooltipElement = null;
       createMeasureTooltip();
       unByKey(listener);
+      // I think this is where to write feature, comment out whilst inspecting objects 
+      let parser = new GeoJSON();
+      // Creates string of polygon and then parse it
+      let userFeature = parser.writeFeature(evt.feature, {featureProjection: 'EPSG:3857'});
+      var userFeatureObj = JSON.parse(userFeature);
+      //  console.log(typeof userFeature);
+      //  console.log(userFeature);
+       console.log('Type of',typeof userFeatureObj);
+       console.log('userFeatureObj',userFeatureObj);
+      
+      // Save string locally and test it exists
+     localStorage.setItem('drawnFeature', userFeature);
+     if(userFeature) {
+       console.log("userFeature Exists");
+     } else {
+       console.log("userFeature not exist");
+     }
+
+
+
+
+      // Try to strinify the json
+      // const userFeatureObjStr = JSON.stringify(userFeatureObj);
+      // console.log(userFeatureObjStr);
+      // localStorage.setItem('drawnFeature1', userFeatureObjStr);
+  
+    
+
+
     }, this);
 }
 
+// Not sure why no features returned, did not like draw!
+//var format = new GeoJSON();
+//var geomFeatures = format.writeFeatures(draw);
+// This old statement was causing various errors, learn from clip 
+// console.log(draw.getGeometry);
 
 /**
  * Creates a new help tooltip
