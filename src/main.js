@@ -28,8 +28,8 @@ import {LineString, Polygon} from 'ol/geom.js';
 import {Tile as TileLayer, Vector as VectorLayer} from 'ol/layer';
 import {defaults as defaultControls, OverviewMap, ZoomToExtent} from 'ol/control';
 
-//import {intersect} from '@turf/intersect';
-import turf from '@turf/turf';
+// need to refactor to @turf/intersection
+import * as turf from '@turf/turf';
 
 
 // // Geolocation functionality
@@ -46,6 +46,46 @@ const position = new VectorSource();
 const currentPosition = new VectorLayer({
   source: position
 });
+
+// Add simple GeoJSON of Scotland (ideally not here)
+
+var squareScotland =
+{
+  "type": "Feature",
+  "properties": {},
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -7.4267578125,
+          55.00282580979323
+        ],
+        [
+          -1.494140625,
+          55.00282580979323
+        ],
+        [
+          -1.494140625,
+          58.56252272853734
+        ],
+        [
+          -7.4267578125,
+          58.56252272853734
+        ],
+        [
+          -7.4267578125,
+          55.00282580979323
+        ]
+      ]
+    ]
+  }
+}
+
+
+
+
+
 
 // Example GeoJSON/vector layer
 const countryLayer = new VectorLayer({
@@ -324,15 +364,62 @@ function addInteraction() {
        console.log('Type: ',typeof userFeatureObj);
        console.log('userFeatureObj',userFeatureObj);
       
-      // Save string locally and test it exists (gets overwritten with each feature)
-     localStorage.setItem('drawnFeature', userFeature);
-     if(userFeature) {
-       console.log("userFeature Exists");
-     } else {
-       console.log("userFeature not exist");
-     }
+    //   // Save string locally and test it exists (gets overwritten with each feature)
+    //  localStorage.setItem('drawnFeature', userFeature);
+    //  if(userFeature) {
+    //    console.log("userFeature Exists");
+    //  } else {
+    //    console.log("userFeature not exist");
+    //  }
 
-     
+    // Try intersect with Scotland geojson feature
+    console.log('Type: ',typeof squareScotland);
+    console.log('countryLayer',squareScotland);
+
+    var intersectionScot = turf.intersect(squareScotland, userFeatureObj);
+    console.log('Type: ',typeof intersectionScot);
+    console.log('intersectionScot', intersectionScot);
+
+// Try intersect with culterPoly geojson featureCollection 
+    console.log('Type: ',typeof culterPoly);
+    console.log('culterPoly',culterPoly);
+
+
+    // var intersectionCulter = turf.intersect(culterPoly, userFeatureObj);
+    // console.log('Type: ',typeof intersectionCulter);
+    // console.log('intersection', intersectionCulter);
+
+
+
+
+    // Looking to add intersection to vector layer, but not needed
+    // var format = new GeoJSON();
+    // var vectorSource = new VectorSource();
+    // var feature = format.readFeature(intersection, {
+    //   featureProjection: 'EPSG:3857'
+    // });
+    // vectorSource.addFeature(feature);
+    // var vectorLayer = new VectorLayer({
+    //   source: vectorSource,
+    //   style: [
+    //     new Style({
+    //       stroke: new Stroke({
+    //         color: [0, 121, 88, 1],
+    //         width: 2
+    //       }),
+    //       fill: new Fill({
+    //         color: [0, 0, 88, 0.6]
+    //       })
+    //     })
+    //   ]
+    // });
+
+
+
+
+
+
+
 
 
 
@@ -341,55 +428,78 @@ function addInteraction() {
       // const userFeatureObjStr = JSON.stringify(userFeatureObj);
       // console.log(userFeatureObjStr);
       // localStorage.setItem('drawnFeature1', userFeatureObjStr);
-  
-    
-
 
     }, this);
 }
 
-// Try intersection outside the draw.on 'end'
-// Try @Turf/intersect 
+// I cannot feature is available outside of function
+// console.log('Type: ',typeof userFeatureObj);
+// console.log('userFeatureObj',userFeatureObj);
 
-var poly1 = {
-  "type": "Feature",
-    "geometry": {
-      "type": "Polygon",
-      "coordinates": [[
-        [-122.801742, 45.48565],
-        [-122.801742, 45.60491],
-        [-122.584762, 45.60491],
-        [-122.584762, 45.48565],
-        [-122.801742, 45.48565]
-      ]]
-    }
-  }
-  var poly2 = {
-  "type": "Feature",
-    "geometry": {
-      "type": "Polygon",
-      "coordinates": [[
-        [-122.520217, 45.535693],
-        [-122.64038, 45.553967],
-        [-122.720031, 45.526554],
-        [-122.669906, 45.507309],
-        [-122.723464, 45.446643],
-        [-122.532577, 45.408574],
-        [-122.487258, 45.477466],
-        [-122.520217, 45.535693]
-      ]]
-    }
-  }
+// // Try intersection outside the draw.on 'end'
+// // Try @Turf/intersect 
 
- // Unable to get this to work 030718 (error about reading property of intersect)
- //var intersection = turf.intersect(countryLayer, fieldLayer); 
+// // Try add featureLayer, errors
+
+// var poly1 =
+// {
+//   "type": "Feature",
+//   "properties": {},
+//   "geometry": {
+//     "type": "Polygon",
+//     "coordinates": [
+//       [
+//         [
+//           -5.2734375,
+//           51.6180165487737
+//         ],
+//         [
+//           -50.2734375,
+//           44.84029065139799
+//         ],
+//         [
+//           -40.78125,
+//           23.563987128451217
+//         ],
+//         [
+//           7.03125,
+//           49.15296965617042
+//         ],
+//         [
+//           -5.2734375,
+//           51.6180165487737
+//         ]
+//       ]
+//     ]
+//   }
+// }
+//   // Declare a source
+//   var featureSource = new VectorSource();
+
+// // Add my geojson feature 
+// var poly1Feature = format.readFeature(poly1, {
+//   featureProjection: 'EPSG:3857'
+// });
+// featureSource.addFeature(poly1Feature);
 
 
-// Not sure why no features returned, did not like draw!
-//var format = new GeoJSON();
-//var geomFeatures = format.writeFeatures(draw);
-// This old statement was causing various errors, learn from clip 
-// console.log(draw.getGeometry);
+
+// var featureLayer = new VectorLayer({
+//   source: featureSource,
+//   style: [
+//     new Style({
+//       stroke: new Stroke({
+//         color: [0, 121, 88, 1],
+//         width: 2
+//       }),
+//       fill: new Fill({
+//         color: [0, 0, 88, 0.6]
+//       })
+//     })
+//   ]
+// });
+
+
 
 /**
  * Creates a new help tooltip
@@ -780,3 +890,228 @@ let view = new vega.View(vega.parse(vegaJSONSpec),options)
 
 
 
+//-- Adding test data
+
+var culterPoly = 
+
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "landcover": "woodland",
+        "PhosphorusExport": 1,
+        "NitrogenExport": 10
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -2.2614669799804688,
+              57.09299206383102
+            ],
+            [
+              -2.2638702392578125,
+              57.09317858276609
+            ],
+            [
+              -2.2638702392578125,
+              57.092245978707545
+            ],
+            [
+              -2.265758514404297,
+              57.09047396636831
+            ],
+            [
+              -2.2678184509277344,
+              57.088515327886505
+            ],
+            [
+              -2.265758514404297,
+              57.08776915268033
+            ],
+            [
+              -2.2679901123046875,
+              57.084224615407685
+            ],
+            [
+              -2.2733116149902344,
+              57.08123947914921
+            ],
+            [
+              -2.279491424560547,
+              57.08030657479793
+            ],
+            [
+              -2.2801780700683594,
+              57.07918705860559
+            ],
+            [
+              -2.2733116149902344,
+              57.07956023442378
+            ],
+            [
+              -2.264556884765625,
+              57.08347835386635
+            ],
+            [
+              -2.26043701171875,
+              57.08692968762649
+            ],
+            [
+              -2.2614669799804688,
+              57.09299206383102
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "landcover": "grass",
+        "PhosphorusExport": 5,
+        "NitrogenExport": 30
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -2.2793197631835933,
+              57.080679739353954
+            ],
+            [
+              -2.2733116149902344,
+              57.08151934587941
+            ],
+            [
+              -2.2683334350585938,
+              57.084504459614585
+            ],
+            [
+              -2.2662734985351562,
+              57.08758260653281
+            ],
+            [
+              -2.2678184509277344,
+              57.08832878549255
+            ],
+            [
+              -2.275543212890625,
+              57.087675879723875
+            ],
+            [
+              -2.2765731811523438,
+              57.085250700510024
+            ],
+            [
+              -2.280864715576172,
+              57.08357163738019
+            ],
+            [
+              -2.2793197631835933,
+              57.080679739353954
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "landcover": "arable",
+        "PhosphorusExport": 10,
+        "NitrogenExport": 200
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -2.2760581970214844,
+              57.08776915268033
+            ],
+            [
+              -2.2683334350585938,
+              57.08823551394367
+            ],
+            [
+              -2.2649002075195312,
+              57.09140661499798
+            ],
+            [
+              -2.2681617736816406,
+              57.09299206383102
+            ],
+            [
+              -2.272624969482422,
+              57.092152717011494
+            ],
+            [
+              -2.2765731811523438,
+              57.09168640501245
+            ],
+            [
+              -2.2800064086914062,
+              57.090100900347906
+            ],
+            [
+              -2.2760581970214844,
+              57.08776915268033
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "landcover": "urban",
+        "PhosphorusExport": 3,
+        "NitrogenExport": 50
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -2.272796630859375,
+              57.09243250139593
+            ],
+            [
+              -2.268505096435547,
+              57.092898804011625
+            ],
+            [
+              -2.2621536254882812,
+              57.09336510076283
+            ],
+            [
+              -2.2607803344726562,
+              57.097095263654545
+            ],
+            [
+              -2.272968292236328,
+              57.09802774573524
+            ],
+            [
+              -2.2762298583984375,
+              57.098214239336606
+            ],
+            [
+              -2.2774314880371094,
+              57.09625600972661
+            ],
+            [
+              -2.272796630859375,
+              57.09243250139593
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}
