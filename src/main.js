@@ -16,7 +16,7 @@ import Point from 'ol/geom/Point';
 // import LineString from 'ol/geom/linestring';
 import Coordinate from 'ol/coordinate';
 import MousePosition from 'ol/control/MousePosition';
-import GeoJSON from 'ol/format/Geojson';
+import GeoJSON from 'ol/format/GeoJSON';
 import sync from 'ol-hashed';
 import * as vega from 'vega';
 import 'normalize.css/normalize.css';
