@@ -4329,9 +4329,13 @@ icss-utils@^2.1.0:
   dependencies:
     postcss "^6.0.1"
 
-ieee754@^1.1.4, ieee754@^1.1.6:
+ieee754@^1.1.4:
   version "1.1.11"
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.11.tgz#c16384ffe00f5b7835824e67b6f2bd44a5229455"
+
+ieee754@^1.1.6:
+  version "1.1.12"
+  resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.12.tgz#50bf24e5b9c8bb98af4964c941cdb0918da7b60b"
 
 iferr@^0.1.5:
   version "0.1.5"
@@ -5738,9 +5742,9 @@ ol@*:
     pixelworks "1.1.0"
     rbush "2.0.1"
 
-ol@5.0.0-beta.13:
-  version "5.0.0-beta.13"
-  resolved "https://registry.yarnpkg.com/ol/-/ol-5.0.0-beta.13.tgz#cd49d4c09c630fcd463cec59cc6b940c8b7f88a8"
+ol@5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/ol/-/ol-5.0.2.tgz#e44f97771d40a4055a09d6b7152bf931378c841d"
   dependencies:
     pbf "3.1.0"
     pixelworks "1.1.0"
