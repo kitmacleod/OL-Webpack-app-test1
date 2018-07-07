@@ -3,88 +3,38 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Integrating OpenLayers with a Webpack build</title>
+    <title>FOLM</title>
    
-    <!-- this was the original code, now in main.js
-    <script src="https://cdn.jsdelivr.net/npm/vega@4.0.0-rc.2"></script>
-
-    <script type="text/javascript">
-      var view; 
-  
-      vega.loader()
-        .load('../vega/bar-chart.vg.json')
-        .then(function(data) { render(JSON.parse(data)); });
-  
-      function render(spec) {
-        view = new vega.View(vega.parse(spec))
-          .renderer('canvas')  // set renderer (canvas or svg)
-          .initialize('#view') // initialize view within parent DOM container
-          .hover()             // enable hover encode set processing
-          .run();
-      }
-    </script>
-
-  -->
-
-
-  <style>
-  
-    /*! [tools] */
-    #tools {
-      position: relative;
-      top: 1rem;
-      right: 1rem;
-    }
-    #tools a {
-      display: inline-block;
-      padding: 0.5rem;
-      background: white;
-      cursor: pointer;
-    }
-    /*! [tools] */
-  </style>
-
 
 
   </head>
-
-  
   <body>
-  
 
      <div class="container">
          <header class="header">
-            <h1 class="header__title">FOLM</h1>
-            <h2 class="header__subtitle">This app is being developed</h2>
+            <h1 class="header__title">Aiding decisions about land management</h1>
+            <h2 class="header__subtitle">Under development: exploring what information can be provided</h2>
          </header>
          <nav class="nav">
            <ul>
-             <li><a href="">Nav 1</a></li>
-             <li><a href="">Nav 2</a></li>
-             <li><a href="">Nav 3</a></li>
+             <li><a href="https://www.ruralpayments.org/publicsite/futures/topics/all-schemes/agri-environment-climate-scheme/">Information on Agri-Env Climate Scheme</a></li>
+             <li><a href="">Another link</a></li>
            </ul>
          </nav> 
          <div id="map-container"></div>
          <div id="tools">
            <a id="clear">Clear</a>
-           <a id="download"="features.json">Download</a>
          </div>
          <div class="chart">
-           <p>Chart</p>
+           <h2 class="chart__title">Indication of environmental and financial outcomes</h2>
+           <h3 class="chart__subtitle">Information on environmmental outcomes</h3>
            <div id="view"></div>
+           <h3 class="chart__subtitle">Information on financial outcomes</h3>
+           <p class="text">Output from a calculation linked to AECS web pages</p>
 
          </div>
-         <div class="input">User input
-          <!-- <div class="mouse-position"> </div>
-           <form>
-           <label>Projection</label>
-           <select id="projection">
-             <option value="EPSG:4326">EPSG:4326">EPSG:4326 (WGS 84)</option>
-             <option value="EPSG:3857">EPSG:3857 (WGS84 Web Mercator)</option>
-           </select>
-           <label>Precision </label>
-           <input id="precision" type="number" min="0" max="12"value="4"/>
-         </form> -->
+         <div class="input">
+           <h2 class="header__subtitle">Please select measure:</h2>
          <form class="form-inline">
            <label>Type of measure &nbsp;</label>
            <select id="type">
@@ -93,7 +43,7 @@
            </select>
           </form>
         </div>
-        <footer class="main-footer">The footer</footer>
+        <footer class="main-footer">Additional information can appear here</footer>
    </div>
    
     <script src="/dist/bundle.js"></script>

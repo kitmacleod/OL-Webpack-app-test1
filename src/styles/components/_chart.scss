@@ -11,3 +11,17 @@
 //     color:blue;
 //   }
 // }
+
+.chart__title {
+  color: $off-black;
+  font-size: $l-size;
+  margin: 0;
+  padding: 1rem;
+}
+
+.chart__subtitle {
+  color: $off-black;
+  font-size: $m-size;
+  font-weight: 1000;
+  padding: 1rem;
+}

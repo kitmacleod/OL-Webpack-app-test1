@@ -9,10 +9,21 @@
    color: $off-black;
    font-size: $l-size;
    margin: 0;
+   padding: 1rem;
  }
 
  .header__subtitle {
    color: $off-black;
    font-size: $m-size;
-   font-weight: 500;
+   font-weight: 1000;
+   padding: 1rem;
  }
+ .tools {
+  top: 1rem;
+  right: 1rem;
+}
+.tools a{
+  padding: 1rem;
+  background: white;
+  cursor: pointer;
+}

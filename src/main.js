@@ -550,10 +550,10 @@ addInteraction();
 
 // add from workshop clear and download buttons
 // clear in ws on source (here vector)
-// const clearVector = document.getElementById('clear');
-// clearVector.addEventListener('click', function() {
-//   source.clear();
-// });
+const clearVector = document.getElementById('clear');
+clearVector.addEventListener('click', function() {
+  source.clear();
+});
 
 // Try workshop download code 230618 not working
 
@@ -677,50 +677,11 @@ addInteraction();
 // const typeSelect = document.getElementById('type');
 
 
-// // Jontas fiddle add vars NOT WORKING
-// // var vectorSource = new VectorSource();
-// // var vectorLayer = new VectorLayer({
-// //   source: vectorSource });
-// //   map.addLayer(vectorLayer);
-// // var coords_element = document.getElementById('coords');
-// // var coords_length = 0;
-
 
 //  function addInteractions() {
 //    draw = new Draw({
 //      source: drawSource,
 //      type: typeSelect.value,
-//      // Jontas  fiddle NOT WORKING 
-// //     geometryFunction: function (coords, geom) {
-// //       if (!geom) geom = new
-// //       LineString(null);
-// //       geom.setCoordinates(coords);
-// //       //if linestring changed
-// //       if(coords.length !== coords_length) {
-// //         coords_length = coords.length;
-// //         coords_element.innerHTML = coords.join('<br>');
-// //       }
-// //       return geom;
-
-//     // }
-//    });
-//    map.addInteraction(draw);
-
-// // Jonatas fiddle code for feature console NOT WORKING
-
-// // var feature;
-
-// // draw.on('drawend', function(evt) {
-// //   console.infor('drawend');
-// //   //console.info(evt);
-// //   feature = evt.feature;
-// // });
-// // vectorSource.on('addfeature', 
-// // function(evt) {
-// //   console.info('addfeature');
-// //   console.info(evt);
-// //   console.info(evt.feature === feature);
-// // });
 
 
 //   snap = new Snap({source: drawSource});
@@ -764,14 +725,9 @@ let loader = {
       return new Promise((resolve,reject) => {
 
           let values = [
-              {"category": "A", "value": 28},
-              {"category": "B", "value": 55},
-              {"category": "C", "value": 43},
-              {"category": "D", "value": 91},
-              {"category": "E", "value": 81},
-              {"category": "F", "value": 53},
-              {"category": "G", "value": 19},
-              {"category": "H", "value": 87}
+              {"category": "Woodland", "value": 20},
+              {"category": "Grass", "value": 55},
+              {"category": "Arable", "value": 25}
           ];
 
           let wait = setTimeout(() => {
@@ -789,7 +745,7 @@ let vegaJSONSpec = {
   "$schema": "https://vega.github.io/schema/vega/v3.0.json",
   "width": 400,
   "height": 200,
-  "padding": 5,
+  "padding": 10,
 
   "data": [
       {
