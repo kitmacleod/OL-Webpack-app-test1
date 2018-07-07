@@ -10,13 +10,14 @@ module.exports  = (env) => {
       entry:'./src/main.js',
       //entry: './src/playground/arrow-functionReact.js',
       output: {
-        path: path.join(__dirname, 'public'),
+        path: path.join(__dirname, 'public', 'dist'),
         filename: 'bundle.js'
       },
       devtool: isProduction ? 'source-map':'cheap-module-eval-source-map',
       devServer:{
         contentBase: path.join(__dirname, 'public'),
-         historyApiFallback: true
+         historyApiFallback: true,
+         publicPath: '/dist/'
       },
       module: {
         rules: [
